@@ -1,0 +1,11 @@
+{
+    "Name": "The Hunted",
+    "Description": "A gamemode similar to The Hidden mod for the Source engine.",
+    "Version": "1.0.0",
+    "Authors": [ "MajorVictory87" ],
+    "HasVeniceEXT": true,
+    "Dependencies": {
+        "veniceext": "^1.0.0"
+    },
+    "Tags": [ "hunted" ]
+}
