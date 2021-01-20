@@ -18,13 +18,14 @@ end)
 
 Console:Register('nightvision', 'Set Nightvision Environment', function(args)
 
-	if args[1] == nil then
+	if #args < 1 then
 		for i=1, #visualEnvironments do
 			print('['..i..']: '..visualEnvironments[i])
 		end
 	elseif (args[1] == '0' or args[1] == 'false') then
 		disableNightVision()
 	else
+		disableNightVision()
 		enableNightVision(args[1])
 	end
 end)
