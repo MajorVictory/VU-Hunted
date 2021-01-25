@@ -29,6 +29,8 @@ function createSoldierPhysics(originalInstance)
 			-- extra creepy crawling
 			if (customPose.poseType == CharacterPoseType.CharacterPoseType_Prone) then
 				customPose.velocity = 8
+			elseif (customPose.poseType == CharacterPoseType.CharacterPoseType_Crouch) then
+				customPose.velocity = 1
 			else
 				customPose.velocity = 4
 			end
@@ -83,7 +85,7 @@ function creatSoldierBP(originalBP)
 	end
 
 	-- Change the soldier's max health.
-	customSoldierData.maxHealth = 1000
+	customSoldierData.maxHealth = 500
 	customSoldierData.characterPhysics = CharacterPhysicsData(mmResources:GetInstance('huntedsoldierphysics'))
 
 	return customSoldierBp

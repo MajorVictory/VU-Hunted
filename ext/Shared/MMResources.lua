@@ -53,7 +53,7 @@ function MMResources:__init()
 
 	self.MMResources["nightvision"] = {}
 	self.MMResources["nightvision"]["Partition"] = 'C7E88CE9-CD43-4490-8E44-D6A813A07145'
-	self.MMResources["nightvision"]["Instance"] = 'F4F6815E-43E1-4FA4-A1DF-617308ED63F4' -- custom guid
+	self.MMResources["nightvision"]["Instance"] = 'F4F6815E-43E1-4FA4-A1DF-617308ED63F4'
 
 
 	self.MMResources["team_ru"] = {}
@@ -79,6 +79,23 @@ function MMResources:__init()
 	self.MMResources["team_ru_xp4_scv"] = {}
 	self.MMResources["team_ru_xp4_scv"]["Partition"] = 'EFCF6ECE-2B43-4358-A694-0E2D5F81E3B0'
 	self.MMResources["team_ru_xp4_scv"]["Instance"] = '092BAEF2-78B5-4D29-8E85-661FCD934491'
+
+
+	self.MMResources["m1911silencedbullet"] = {}
+	self.MMResources["m1911silencedbullet"]["Partition"] = '944B9E9B-279F-11E0-BCCD-BF5F79C336AA'
+	self.MMResources["m1911silencedbullet"]["Instance"] = '08D2DA3B-E052-4E36-87B8-46BBE7AFDBB5'
+
+	self.MMResources["m1911"] = {}
+	self.MMResources["m1911"]["Partition"] = '944B9E9B-279F-11E0-BCCD-BF5F79C336AA'
+	self.MMResources["m1911"]["Instance"] = '08D2DA3B-E052-4E36-87B8-46BBE7AFDBB5'
+
+	self.MMResources["mavbullet"] = {}
+	self.MMResources["mavbullet"]["Partition"] = '2E77D41C-D22E-11E0-B78F-C6A4D11A79C9'
+	self.MMResources["mavbullet"]["Instance"] = '2E77D41D-D22E-11E0-B78F-C6A4D11A79C9'
+
+	--self.MMResources["TEMPLATE"] = {}
+	--self.MMResources["TEMPLATE"]["Partition"] = 'WWWWWWWWWWWWWWWWWWWWWWWW'
+	--self.MMResources["TEMPLATE"]["Instance"] = 'WWWWWWWWWWWWWWWWWWWWWWWW'
 
 
 	for resourceName, resourceData in pairs(self.MMResources) do

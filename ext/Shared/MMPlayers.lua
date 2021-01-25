@@ -2,6 +2,7 @@ class "MMPlayers"
 
 function MMPlayers:__init()
 	Events:Subscribe('Level:Loaded', self, self.onLevelLoaded)
+	Events:Subscribe('Level:Destroy', self, self.onLevelDestroy)
 	
 	-- negate damage from hitting stuff because 2FAST
 	Hooks:Install('Soldier:Damage', 1, function(hook, soldier, info, giverInfo)
@@ -240,11 +241,14 @@ function MMPlayers:onLevelLoaded(levelName, gameMode)
 		RU = {
 			Assault = {
 				ID_M_SOLDIER_PRIMARY = { },
-				ID_M_SOLDIER_SECONDARY = { },
+				ID_M_SOLDIER_SECONDARY = {
+					'Weapons/M1911/U_M1911_Silenced'
+				},
 				ID_M_SOLDIER_GADGET1 = {},
 				ID_WEAPON_CATEGORYGADGET1 = {},
 				ID_M_SOLDIER_GADGET2 = {
-					'Weapons/Gadgets/M320/U_M320_SMK'
+					'Weapons/Gadgets/M320/U_M320_SMK',
+					'Weapons/Gadgets/C4/U_C4'
 				},
 				GRENADE = {
 					'Weapons/M67/U_M67'
@@ -256,7 +260,9 @@ function MMPlayers:onLevelLoaded(levelName, gameMode)
 			},
 			Engineer = {
 				ID_M_SOLDIER_PRIMARY = { },
-				ID_M_SOLDIER_SECONDARY = { },
+				ID_M_SOLDIER_SECONDARY = {
+					'Weapons/M1911/U_M1911_Silenced'
+				},
 				ID_M_SOLDIER_GADGET1 = {},
 				ID_WEAPON_CATEGORYGADGET1 = {},
 				ID_M_SOLDIER_GADGET2 = {
@@ -272,7 +278,9 @@ function MMPlayers:onLevelLoaded(levelName, gameMode)
 			},
 			Recon = {
 				ID_M_SOLDIER_PRIMARY = { },
-				ID_M_SOLDIER_SECONDARY = { },
+				ID_M_SOLDIER_SECONDARY = {
+					'Weapons/M1911/U_M1911_Silenced'
+				},
 				ID_M_SOLDIER_GADGET1 = {},
 				ID_WEAPON_CATEGORYGADGET1 = {},
 				ID_M_SOLDIER_GADGET2 = {
@@ -288,7 +296,9 @@ function MMPlayers:onLevelLoaded(levelName, gameMode)
 			},
 			Support = {
 				ID_M_SOLDIER_PRIMARY = { },
-				ID_M_SOLDIER_SECONDARY = { },
+				ID_M_SOLDIER_SECONDARY = {
+					'Weapons/M1911/U_M1911_Silenced'
+				},
 				ID_M_SOLDIER_GADGET1 = {},
 				ID_WEAPON_CATEGORYGADGET1 = {},
 				ID_M_SOLDIER_GADGET2 = {
@@ -301,8 +311,8 @@ function MMPlayers:onLevelLoaded(levelName, gameMode)
 					'Weapons/XP2_Knife_RazorBlade/U_Knife_Razor',
 					'Weapons/Knife/U_Knife'
 				}
-			}
-		},
+			},
+		}
 	}
 
 	for teamName, team in pairs(kitSetups) do
@@ -348,6 +358,10 @@ function MMPlayers:onLevelLoaded(levelName, gameMode)
 	end
 end
 
+function MMPlayers:onLevelDestroy()
+	mmResources:SetLoaded('huntedsoldier', false)
+end
+
 -- Tries to find first available kit
 -- @param teamName string Values: 'US', 'RU'
 -- @param kitName string Values: 'Assault', 'Engineer', 'Support', 'Recon'
@@ -380,15 +394,6 @@ function MMPlayers:findKit(teamName, kitName, returnAll)
     end
 
     return matches
-end
-
-function table:has(value)
-	for i=1, #self do
-		if (self[i] == value) then
-			return true
-		end
-	end
-	return false
 end
 
 return MMPlayers()

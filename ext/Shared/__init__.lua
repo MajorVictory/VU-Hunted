@@ -8,8 +8,10 @@ mmResources = require('__shared/MMResources')
 -- modules
 mmPlayers = require('__shared/MMPlayers')
 mmWeapons = require('__shared/MMWeapons')
+mmGameMode = require('__shared/MMGameMode')
 
 require('__shared/MMCustomSoldier')
+require('__shared/MMMaterialGrid')
 
 -- loop registered resources to listen for
 for resourceName, resourceData in pairs(mmResources:Get()) do
@@ -18,10 +20,18 @@ for resourceName, resourceData in pairs(mmResources:Get()) do
 			mmResources:SetLoaded(resourceName, true)
 			mmPlayers:Write(instance)
 			mmWeapons:Write(instance)
+			mmGameMode:Write(instance)
 		end)
 	end
 end
 
+Events:Subscribe('Partition:Loaded', function(partition)
+	for _, instance in pairs(partition.instances) do
+		mmGameMode:HandleInstance(partition, instance)
+	end
+end)
+
+-- all these bundles to get the superior nightvision for the hunted
 Events:Subscribe('Level:LoadResources', function()
 	ResourceManager:MountSuperBundle('spchunks')
 	ResourceManager:MountSuperBundle('levels/sp_sniper/sp_sniper')
