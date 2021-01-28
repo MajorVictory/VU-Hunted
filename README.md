@@ -7,6 +7,10 @@ U.S. Spec-Ops team up to take down an unknown escaped Russian SCP
 - The RU team must kill 10 soldiers to win.
 - Balance is best at 1 Hunted per 5 Soldiers
 
+## Known Issues
+- Team selection is completely broken, requires manual assignment via rcon
+- Crashes randomly (cool)
+
 ## List of Changes
 - Best played on TDM Maps with very dark lighting
 - US team always acts as the Soldiers
