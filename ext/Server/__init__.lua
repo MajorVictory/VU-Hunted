@@ -17,21 +17,25 @@ mmConVars:RegisterEvents('Server')
 function onPlayerSpawned(player)
 
 	local PlayersUS, PlayersRU, PlayersSpec = mmGameMode:GetPlayers()
-	local startHealth = (#PlayersUS * 500)
-	if (#PlayersUS > 4 and #PlayersRU > 1) then
-		startHealth = math.round(startHealth / PlayersRU)
-	end
-
+	local maxHealth = math.max(math.min((#PlayersUS * 250), 1000), 250)
 	local customSoldier = ebxEditUtils:GetWritableContainer(mmResources:GetInstance('huntedsoldier'), 'object')
-	customSoldier.maxHealth = math.max(math.min(startHealth, 2000), 250)
+	customSoldier.maxHealth = maxHealth
 	setNightVisionState(player)
 	setInvisibleState(player)
+
+	local PlayersUS, PlayersRU, PlayersSpec = mmGameMode:GetPlayers()
+	for i=1, #PlayersRU do
+		if (PlayersRU[i] and PlayersRU[i].soldier ~= nil) then
+			PlayersRU[i].soldier.maxHealth = maxHealth
+		end
+	end
+
 end
 
 function onPlayerKilled(player)
 	setNightVisionState(player, false)
 	setInvisibleState(player, false)
-	setSpectatorState(player, true)
+	--setSpectatorState(player, true)
 end
 
 function onPlayerAuthed(player)
@@ -42,7 +46,7 @@ function onPlayerAuthed(player)
 		mmGameMode:SetTeam(player, 'Spectator')
 		mmGameMode:SetSquad(player, 'Spectator')
 	elseif mmGameMode:GetRoundState() == mmGameMode.RoundState.PreRound then
-		if (#PlayersRU == 0 or (#PlayersUS > 0 and PlayersUS % 5 == 0)) then
+		if (#PlayersRU == 0 or (#PlayersUS > 0 and #PlayersUS % 5 == 0)) then
 			mmGameMode:SetTeam(player, 'Hunted')
 			mmGameMode:SetSquad(player, 'Hunted')
 		else 
@@ -52,21 +56,12 @@ function onPlayerAuthed(player)
 	end
 end
 
-function setTeamHumans(player)
-	print('setTeamHumans: '..player.name)
-	player.teamId = mmGameMode.Teams.Soldier
-	player.squadId = mmGameMode.Squads.Soldier
-end
-
-function setTeamHunted(player)
-	print('setTeamHunted: '..player.name)
-	player.teamId = mmGameMode.Teams.Hunted
-	player.squadId = mmGameMode.Squads.Hunted
-end
-
 function onTeamChange(hook, player, team)
-	local newTeamId = mmGameMode:ConvertTeamID(team)
-	if (newTeamId == mmGameMode.Teams.Hunted) then
+	print('onTeamChange - team: '..tostring(team))
+	print('onTeamChange - player.teamId: '..tostring(player.teamId))
+	team = mmGameMode:ConvertTeamID(player.teamId)
+	print('onTeamChange - ConvertTeamID: '..tostring(team))
+	if (team == mmGameMode.Teams.Hunted) then
 		setNightVisionState(player, false)
 		setInvisibleState(player, false)
 		setSpectatorState(player, false)
@@ -74,7 +69,7 @@ function onTeamChange(hook, player, team)
 		mmGameMode:SetSquad(player, 'Soldier')
 		team = mmGameMode.Teams.Soldier
 
-	elseif (newTeamId == mmGameMode.Teams.Soldier) then
+	elseif (team == mmGameMode.Teams.Soldier) then
 		setSpectatorState(player, false)
 		mmGameMode:SetTeam(player, 'Hunted')
 		mmGameMode:SetSquad(player, 'Hunted')
@@ -88,21 +83,13 @@ function onTeamChange(hook, player, team)
 		mmGameMode:SetSquad(player, 'Spectator')
 		team = mmGameMode.Teams.Spectator
 	end
-	hook:Pass(player, team)
+	--hook:Return(team)
 end
 
 function onFindSquad(hook, player)
-	local gamemodeTeamId = mmGameMode:ConvertTeamID(player.teamId)
-	if (gamemodeTeamId == mmGameMode.Teams.Hunted) then
-		mmGameMode:SetSquad(player, 'Soldier')
-
-	elseif (gamemodeTeamId == mmGameMode.Teams.Soldier) then
-		mmGameMode:SetSquad(player, 'Hunted')
-
-	else
-		mmGameMode:SetSquad(player, 'Spectator')
-	end
-	hook:Return()
+	local teamName = mmGameMode:TeamIDToName(player.teamId)
+	mmGameMode:SetSquad(player, teamName)
+	hook:Pass(player)
 end
 
 function setNightVisionState(player, enabled)
@@ -180,8 +167,41 @@ Events:Subscribe('Player:SpawnOnSelectedSpawnPoint', function(player)
 	onPlayerSpawned(player)
 end)
 
+Events:Subscribe('Server:RoundOver', function(roundTime, winningTeam)
+	print('Server:RoundOver: '..tostring(roundTime)..' | '..tostring(winningTeam))
+
+end)
+
+Events:Subscribe('Server:RoundReset', function(roundTime, winningTeam)
+	print('Server:RoundReset')
+
+	local PlayersUS, PlayersRU, PlayersSpec = mmGameMode:RandomizeTeams()
+
+	for i=1, #PlayersUS do
+		setNightVisionState(PlayersUS[i], false)
+		setInvisibleState(PlayersUS[i], false)
+		setSpectatorState(PlayersUS[i], false)
+		mmGameMode:SetTeam(PlayersUS[i], 'Soldier')
+		mmGameMode:SetSquad(PlayersUS[i], 'Soldier')
+	end
+
+	for i=1, #PlayersRU do
+		setSpectatorState(PlayersRU[i], false)
+		mmGameMode:SetTeam(PlayersRU[i], 'Hunted')
+		mmGameMode:SetSquad(PlayersRU[i], 'Hunted')
+	end
+
+	for i=1, #PlayersSpec do
+		setNightVisionState(PlayersSpec[i], false)
+		setInvisibleState(PlayersSpec[i], false)
+		setSpectatorState(PlayersSpec[i], true)
+		mmGameMode:SetTeam(PlayersSpec[i], 'Spectator')
+		mmGameMode:SetSquad(PlayersSpec[i], 'Spectator')
+	end
+end)
+
 Hooks:Install('Player:SelectTeam', 1, onTeamChange)
---Hooks:Install('Player:FindBestSquad', 1, onFindSquad)
+Hooks:Install('Player:FindBestSquad', 1, onFindSquad)
 
 playerIsHiding = {}
 playerTimers = {}

@@ -247,8 +247,7 @@ function MMPlayers:onLevelLoaded(levelName, gameMode)
 				ID_M_SOLDIER_GADGET1 = {},
 				ID_WEAPON_CATEGORYGADGET1 = {},
 				ID_M_SOLDIER_GADGET2 = {
-					'Weapons/Gadgets/M320/U_M320_SMK',
-					'Weapons/Gadgets/C4/U_C4'
+					'Weapons/Gadgets/M320/U_M320_SMK'
 				},
 				GRENADE = {
 					'Weapons/M67/U_M67'

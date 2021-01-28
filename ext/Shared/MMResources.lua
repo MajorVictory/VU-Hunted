@@ -93,6 +93,47 @@ function MMResources:__init()
 	self.MMResources["mavbullet"]["Partition"] = '2E77D41C-D22E-11E0-B78F-C6A4D11A79C9'
 	self.MMResources["mavbullet"]["Instance"] = '2E77D41D-D22E-11E0-B78F-C6A4D11A79C9'
 
+	self.MMResources["ammobag"] = {}
+	self.MMResources["ammobag"]["Partition"] = '0343F80F-06CC-11E0-8BDF-D7443366E28A'
+	self.MMResources["ammobag"]["Instance"] = '5B73C5E2-127E-419B-95FB-A69D9F5CAA7B'
+
+	self.MMResources["ammobag_projectile"] = {}
+	self.MMResources["ammobag_projectile"]["Partition"] = '04CD683B-1F1B-11E0-BBD1-F7235575FD24'
+	self.MMResources["ammobag_projectile"]["Instance"] = '4AE515CE-846D-6070-5F56-1285B7E8E187'
+
+	self.MMResources["medicbag"] = {}
+	self.MMResources["medicbag"]["Partition"] = 'B54E9BDA-1F2E-11E0-8602-946E2AD98284'
+	self.MMResources["medicbag"]["Instance"] = 'F379D6B0-4592-4DC2-9186-5863D3D69C85'
+
+	self.MMResources["medicbag_projectile"] = {}
+	self.MMResources["medicbag_projectile"]["Partition"] = '1D6061B2-2234-11E0-92F5-C9B649EF6972'
+	self.MMResources["medicbag_projectile"]["Instance"] = 'A867A678-615B-3FA6-7AF5-0DEE6ED69EA0'
+
+	self.MMResources["tugs"] = {}
+	self.MMResources["tugs"]["Partition"] = '483F1918-1815-11E0-8BA5-9B1E2E41035E'
+	self.MMResources["tugs"]["Instance"] = '1D324D2D-6A91-62E2-8D5B-B9FEA8ACF914'
+
+	self.MMResources["tugs_vehicle"] = {}
+	self.MMResources["tugs_vehicle"]["Partition"] = 'C6AC3720-4E44-11E0-B74F-973632ECCDB7'
+	self.MMResources["tugs_vehicle"]["Instance"] = '6AD11C63-B795-4233-B943-C6DE347E26A7'
+
+	
+	self.MMResources["9x19mm_Pistol"] = {}
+	self.MMResources["9x19mm_Pistol"]["Partition"] = '5A1B04AE-43A4-4A55-858F-C297F625F330'
+	self.MMResources["9x19mm_Pistol"]["Instance"] = 'A96C71B7-2E9D-4E0C-978A-611B10C26C2D'
+	
+	self.MMResources["45cal_Pistol"] = {}
+	self.MMResources["45cal_Pistol"]["Partition"] = '7B884D20-15E4-4E62-8EB8-BBC5AC53C530'
+	self.MMResources["45cal_Pistol"]["Instance"] = '913E16D5-6B7A-45DA-AF7E-CCE2B420E95A'
+	
+	self.MMResources["44Magnum"] = {}
+	self.MMResources["44Magnum"]["Partition"] = 'D815E5F8-1C35-4393-BFD9-24BC3121112A'
+	self.MMResources["44Magnum"]["Instance"] = 'F6DF22DF-901C-443D-A9AF-826D37BFD667'
+	
+	self.MMResources["357Magnum"] = {}
+	self.MMResources["357Magnum"]["Partition"] = '62F9B2FD-BFEA-41E6-8DE9-DAC0AE2CAC99'
+	self.MMResources["357Magnum"]["Instance"] = '351EF597-9127-4A87-AF35-D78A67A0A93A'
+
 	--self.MMResources["TEMPLATE"] = {}
 	--self.MMResources["TEMPLATE"]["Partition"] = 'WWWWWWWWWWWWWWWWWWWWWWWW'
 	--self.MMResources["TEMPLATE"]["Instance"] = 'WWWWWWWWWWWWWWWWWWWWWWWW'
